@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,7 @@ import 'package:remember_me/app/screens/home/logic/home_state.dart';
 import 'package:remember_me/app/screens/home/widgets/home_answer_page.dart';
 import 'package:remember_me/app/screens/home/widgets/home_bottom_bar.dart';
 import 'package:remember_me/constants.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -23,6 +25,12 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool isRecording = false;
   Timer? timer;
   int recordedDuration = 0;
+  // late Record _recorder;
+  // late StreamSubscription<RecordState> _recordSub;
+  // late StreamSubscription<List<int>> _audioStreamSubscription;
+  // late StreamController<List<int>> _audioStreamController;
+  // late SpeechToText _speechToText;
+  // String _transcription = '';
 
   String get formattedDuration {
     final minutes = (recordedDuration / 60000).floor();
@@ -41,6 +49,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   void dispose() {
     recorderController.dispose();
     timer?.cancel();
+
     super.dispose();
   }
 
@@ -124,10 +133,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                       spacing: 5,
                       waveThickness: 2,
                     ),
-                    size: Size(200, 100),
+                    size: Size(200, 150),
                   ),
                 ),
               ),
+              Expanded(child: SingleChildScrollView(child: Text(""))),
             ],
           ),
         ),
@@ -185,7 +195,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Widget _buildAnsweringPage() {
-    return HomeAnswerPage();
+    return HomeAnswerPage(key: const Key('answering_page'));
   }
 
   @override
@@ -234,7 +244,34 @@ class _HomePageState extends ConsumerState<HomePage> {
 
           Expanded(
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 400),
+              switchInCurve: Curves.easeIn,
+              switchOutCurve: Curves.easeOut,
+              transitionBuilder: (child, animation) {
+                return FadeTransition(
+                  key: ValueKey<Key?>(child.key),
+                  opacity: Tween<double>(
+                    begin: 0.3,
+                    end: 1.0,
+                  ).animate(animation),
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(-0.03, 0.0),
+                      end: const Offset(0.0, 0.0),
+                    ).animate(animation),
+                    child: child,
+                  ),
+                );
+              },
+              layoutBuilder: (currentChild, child) {
+                return Stack(
+                  alignment: Alignment.topCenter,
+                  children: <Widget>[
+                    ...child,
+                    if (currentChild != null) currentChild,
+                  ],
+                );
+              },
               child:
                   ref.watch(
                             homeProvider.select((state) => state.selectedTab),
