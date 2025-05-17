@@ -48,4 +48,15 @@ class ApiService {
 
   Future<Result<User>> getUser() =>
       _dio.get("/api/v1/users/me", fromJson: (json) => User.fromJson(json));
+
+  Future<Result<bool>> uploadTextMemory(String text) async =>
+      _dio.post("/api/v1/memories/text", data: {"text": text});
+
+  Future<Result<bool>> uploadImageMemory(File image, String fileUrl) async {
+    final formData = FormData.fromMap({
+      "image": await MultipartFile.fromFile(image.path),
+      "file_url": fileUrl,
+    });
+    return _dio.post("/api/v1/memories/image", data: formData);
+  }
 }
