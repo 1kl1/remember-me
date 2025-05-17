@@ -34,7 +34,7 @@ void main() async {
               colorScheme: ColorSchemes.lightViolet(),
               radius: 0.5,
             ),
-            title: 'Memoria',
+            title: 'Remember Me',
             routerConfig: router,
             debugShowCheckedModeBanner: false,
             builder: (context, child) {

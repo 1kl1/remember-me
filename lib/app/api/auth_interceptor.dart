@@ -19,7 +19,6 @@ class AuthInterceptor extends InterceptorsWrapper {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    // Ensure headers map exists
     options.headers = Map<String, dynamic>.from(options.headers);
 
     if (authService.state.isLoggedIn && authService.state.accessToken != null) {

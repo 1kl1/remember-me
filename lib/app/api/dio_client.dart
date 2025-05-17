@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:remember_me/app/api/api_error.dart';
 import 'package:remember_me/app/api/auth_interceptor.dart';
-import 'package:remember_me/app/api/redirect_interceptor.dart';
 import 'package:remember_me/app/api/result.dart';
 import 'package:remember_me/app/auth/auth_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -22,11 +21,9 @@ class MyDio {
     dio.options.baseUrl = _host;
     dio.options.connectTimeout = const Duration(milliseconds: 60000);
     dio.options.receiveTimeout = const Duration(milliseconds: 60000);
-    // dio.interceptors.add(RedirectInterceptor(dio: dio));
     dio.interceptors.add(LogInterceptor(responseBody: true));
 
     rawDio.options.baseUrl = _host;
-    // rawDio.interceptors.add(RedirectInterceptor(dio: rawDio));
     rawDio.interceptors.add(LogInterceptor(responseBody: true));
   }
 
@@ -46,12 +43,6 @@ class MyDio {
   }) async {
     try {
       final dio = isRaw ? rawDio : this.dio;
-      final existingHeaders = dio.options.headers;
-      final mergedHeaders = {
-        ...existingHeaders,
-        "ngrok-skip-browser-warning": "any",
-        "User-Agent": "Memoria/1.0.0",
-      };
 
       final response = await dio.request(
         path,
@@ -61,7 +52,6 @@ class MyDio {
           method: method,
           followRedirects: true,
           maxRedirects: 5,
-          headers: mergedHeaders,
           persistentConnection: true,
           preserveHeaderCase: false,
         ),
