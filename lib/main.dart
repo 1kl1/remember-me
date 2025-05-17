@@ -1,29 +1,57 @@
-import 'package:flutter/material.dart';
-import 'widgets/app_scaffold.dart'; // Import the new AppScaffold
-import 'constants.dart'; // Import constants
+import 'dart:async';
+import 'dart:developer';
 
-void main() {
-  runApp(MyApp());
-}
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get_it/get_it.dart';
+import 'package:remember_me/app/api/api_error.dart';
+import 'package:remember_me/app/api/api_service.dart';
+import 'package:remember_me/app/auth/auth_service.dart';
+import 'package:remember_me/app/route/router_service.dart';
+import 'package:remember_me/app/service/gcs_storage_service.dart';
+import 'package:remember_me/app/service/secure_storage_service.dart';
+import 'package:remember_me/firebase_options.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Memory App',
-      theme: ThemeData(
-        primarySwatch: Colors.amber, // This will be overridden by other specific colors
-        scaffoldBackgroundColor: kAppBgColor,
-        fontFamily: 'Roboto', // You can use any preferred font
-        appBarTheme: AppBarTheme(
-          backgroundColor: kAppBgColor,
-          elevation: 0,
-          iconTheme: IconThemeData(color: kInactiveNavTextTeal),
-          titleTextStyle: TextStyle(color: kDefaultTextColor, fontSize: 20, fontWeight: FontWeight.bold),
+part 'service.dart';
+
+void main() async {
+  runZonedGuarded<Future<void>>(
+    () async {
+      await Service.initFlutter();
+      await Service.initEnv();
+      await Service.initFirebase();
+      final serviceProviderContainer = await Service.registerServices();
+      final router = RouterService.I.router;
+
+      runApp(
+        UncontrolledProviderScope(
+          container: serviceProviderContainer,
+          child: ShadcnApp.router(
+            theme: ThemeData(
+              colorScheme: ColorSchemes.lightViolet(),
+              radius: 0.5,
+            ),
+            title: 'Memoria',
+            routerConfig: router,
+            debugShowCheckedModeBanner: false,
+            builder: (context, child) {
+              return Overlay(
+                initialEntries: [OverlayEntry(builder: (context) => child!)],
+              );
+            },
+          ),
         ),
-      ),
-      home: AppScaffold(), // Use the new AppScaffold
-      debugShowCheckedModeBanner: false,
-    );
-  }
+      );
+    },
+    (error, stackTrace) {
+      log('runZonedGuarded: ', error: error, stackTrace: stackTrace);
+      if (error is ApiError) {
+        log('ApiError: ${error.message}');
+      }
+      debugPrint('runZonedGuarded: $error');
+    },
+  );
 }

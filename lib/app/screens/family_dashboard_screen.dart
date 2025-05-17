@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants.dart'; // For color constants
+import '../../constants.dart'; // For color constants
 
 class FamilyDashboardScreen extends StatelessWidget {
   @override
@@ -44,7 +44,11 @@ class FamilyDashboardScreen extends StatelessWidget {
               child: CircleAvatar(
                 radius: 28,
                 backgroundColor: Colors.grey[300],
-                 child: Icon(Icons.person_outline, size: 30, color: Colors.grey[600]),
+                child: Icon(
+                  Icons.person_outline,
+                  size: 30,
+                  color: Colors.grey[600],
+                ),
               ),
             ),
             SizedBox(height: 20),
@@ -60,7 +64,11 @@ class FamilyDashboardScreen extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 'Upload Memory',
-                style: TextStyle(color: kDefaultTextColor, fontSize: 16, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                  color: kDefaultTextColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             SizedBox(height: 25),
@@ -69,10 +77,7 @@ class FamilyDashboardScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Color(0xFFFEFEFE), // Very light fill for the box
                 borderRadius: BorderRadius.circular(12.0),
-                border: Border.all(
-                  color: kInputBorderYellow,
-                  width: 2.0,
-                ),
+                border: Border.all(color: kInputBorderYellow, width: 2.0),
               ),
               child: Center(
                 child: Container(
@@ -89,14 +94,21 @@ class FamilyDashboardScreen extends StatelessWidget {
             SizedBox(height: 15),
             Text(
               'Category',
-              style: TextStyle(color: kDefaultTextColor, fontSize: 14, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                color: kDefaultTextColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             SizedBox(height: 8),
             TextField(
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Color(0xFFFEFEFE),
-                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                   borderSide: BorderSide(color: kInputBorderYellow, width: 2.0),
@@ -124,7 +136,11 @@ class FamilyDashboardScreen extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 'Confirm Upload',
-                style: TextStyle(color: kGreenButtonText, fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: kGreenButtonText,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             SizedBox(height: 20),

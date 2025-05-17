@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
-import '../constants.dart'; // For color constants
+import '../../constants.dart'; // For color constants
 
 class MemoryAlbumScreen extends StatelessWidget {
   final List<Map<String, String>> photoItems = [
-    {"image": "https://via.placeholder.com/150/CCCCCC/000000?Text=Family", "label": "Family"},
-    {"image": "https://via.placeholder.com/150/CCCCCC/000000?Text=Friend", "label": "Friend"},
-    {"image": "https://via.placeholder.com/150/CCCCCC/000000?Text=Travel", "label": "Travel"},
-    {"image": "https://via.placeholder.com/150/CCCCCC/000000?Text=Holiday", "label": "Holiday"},
-    {"image": "https://via.placeholder.com/150/CCCCCC/000000?Text=Pet", "label": "Pet"},
-    {"image": "https://via.placeholder.com/150/CCCCCC/000000?Text=Everyday", "label": "Everyday"},
+    {
+      "image": "https://via.placeholder.com/150/CCCCCC/000000?Text=Family",
+      "label": "Family",
+    },
+    {
+      "image": "https://via.placeholder.com/150/CCCCCC/000000?Text=Friend",
+      "label": "Friend",
+    },
+    {
+      "image": "https://via.placeholder.com/150/CCCCCC/000000?Text=Travel",
+      "label": "Travel",
+    },
+    {
+      "image": "https://via.placeholder.com/150/CCCCCC/000000?Text=Holiday",
+      "label": "Holiday",
+    },
+    {
+      "image": "https://via.placeholder.com/150/CCCCCC/000000?Text=Pet",
+      "label": "Pet",
+    },
+    {
+      "image": "https://via.placeholder.com/150/CCCCCC/000000?Text=Everyday",
+      "label": "Everyday",
+    },
   ];
 
   final List<String> videoLabels = [
-    "Family", "Friend", "Travel",
-    "Holiday", "Birthday", "Wedding"
+    "Family",
+    "Friend",
+    "Travel",
+    "Holiday",
+    "Birthday",
+    "Wedding",
   ];
 
   @override
@@ -34,7 +56,12 @@ class MemoryAlbumScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildSectionTitleChip('Memory Tags!', kHighlightYellow, fontSize: 22, isLarge: true),
+            _buildSectionTitleChip(
+              'Memory Tags!',
+              kHighlightYellow,
+              fontSize: 22,
+              isLarge: true,
+            ),
             SizedBox(height: 20),
             _buildSectionTitleChip('Photos', kPaleYellow),
             SizedBox(height: 12),
@@ -50,9 +77,17 @@ class MemoryAlbumScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionTitleChip(String title, Color bgColor, {double fontSize = 16, bool isLarge = false}) {
+  Widget _buildSectionTitleChip(
+    String title,
+    Color bgColor, {
+    double fontSize = 16,
+    bool isLarge = false,
+  }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: isLarge ? 18 : 12, vertical: isLarge ? 8 : 5),
+      padding: EdgeInsets.symmetric(
+        horizontal: isLarge ? 18 : 12,
+        vertical: isLarge ? 8 : 5,
+      ),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(isLarge ? 20 : 15),
@@ -76,7 +111,7 @@ class MemoryAlbumScreen extends StatelessWidget {
         crossAxisCount: 3,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
-        childAspectRatio: 3 / 3.8, 
+        childAspectRatio: 3 / 3.8,
       ),
       itemCount: items.length,
       itemBuilder: (context, index) {
@@ -89,13 +124,23 @@ class MemoryAlbumScreen extends StatelessWidget {
                   image: DecorationImage(
                     image: NetworkImage(items[index]['image']!),
                     fit: BoxFit.cover,
-                    onError: (exception, stackTrace) => Center(child: Icon(Icons.image_not_supported, color: Colors.grey, size: 30)),
+                    onError:
+                        (exception, stackTrace) => Center(
+                          child: Icon(
+                            Icons.image_not_supported,
+                            color: Colors.grey,
+                            size: 30,
+                          ),
+                        ),
                   ),
                 ),
               ),
             ),
             SizedBox(height: 5),
-            Text(items[index]['label']!, style: TextStyle(color: kSubTextColor, fontSize: 12)),
+            Text(
+              items[index]['label']!,
+              style: TextStyle(color: kSubTextColor, fontSize: 12),
+            ),
           ],
         );
       },
@@ -122,11 +167,20 @@ class MemoryAlbumScreen extends StatelessWidget {
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                 child: Center(child: Icon(Icons.play_circle_outline, color: Colors.grey[600], size: 30))
+                child: Center(
+                  child: Icon(
+                    Icons.play_circle_outline,
+                    color: Colors.grey[600],
+                    size: 30,
+                  ),
+                ),
               ),
             ),
             SizedBox(height: 5),
-            Text(labels[index], style: TextStyle(color: kSubTextColor, fontSize: 12)),
+            Text(
+              labels[index],
+              style: TextStyle(color: kSubTextColor, fontSize: 12),
+            ),
           ],
         );
       },

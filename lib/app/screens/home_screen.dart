@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants.dart'; // For color constants
+import '../../constants.dart'; // For color constants
 
 class HomeScreen extends StatelessWidget {
   @override

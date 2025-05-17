@@ -2,11 +2,12 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../screens/home_screen.dart';
 import '../screens/memory_stimulation_screen.dart';
 import '../screens/memory_album_screen.dart';
 import '../screens/family_dashboard_screen.dart';
-import '../constants.dart'; // Import constants
+import '../../constants.dart'; // Import constants
 
 class AppScaffold extends StatefulWidget {
   @override
@@ -35,6 +36,8 @@ class _AppScaffoldState extends State<AppScaffold> {
     //   body: Center(
     //     child: ElevatedButton(
     //       onPressed: () async {
+    context.push("/login");
+    context.pop();
     //         final dio = Dio();
     //         final token = "";
     //         final result = await dio.get(

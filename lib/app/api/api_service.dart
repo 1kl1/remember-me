@@ -1,0 +1,51 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:remember_me/app/api/dio_client.dart';
+import 'package:remember_me/app/api/result.dart';
+import 'package:remember_me/app/api/token.dart';
+import 'package:remember_me/app/auth/auth_service.dart';
+import 'package:get_it/get_it.dart';
+import 'package:remember_me/app/provider/user/user.dart';
+import 'package:uuid/uuid.dart';
+
+class ApiService {
+  static ApiService get I => GetIt.I<ApiService>();
+
+  late final MyDio _dio;
+
+  void setAuthService(AuthService authService) =>
+      _dio.setAuthService(authService);
+
+  ApiService() {
+    _dio = MyDio(dio: Dio(), rawDio: Dio());
+  }
+
+  Future<Result<Token>> signIn(String email, String password) => _dio.post(
+    "/api/v1/auth/signin",
+    data: {"email": email, "password": password},
+    fromJson: (json) => Token.fromJson(json),
+  );
+
+  Future<Result<Token>> signUp(String email, String password, String name) =>
+      _dio.post(
+        "/api/v1/auth/signup",
+        data: {
+          "email": email,
+          "password": password,
+          "firebase_uid": const Uuid().v4(),
+          "display_name": name,
+        },
+        fromJson: (json) => Token.fromJson(json),
+      );
+
+  Future<Result<Token>> refreshToken(String refreshToken) => _dio.post(
+    "/api/v1/auth/refresh",
+    data: {"refresh_token": refreshToken},
+    fromJson: (json) => Token.fromJson(json),
+    isRaw: true,
+  );
+
+  Future<Result<User>> getUser() =>
+      _dio.get("/api/v1/users/me", fromJson: (json) => User.fromJson(json));
+}
