@@ -1,11 +1,221 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:async';
 
-class HomePage extends ConsumerWidget {
+import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:remember_me/constants.dart';
+
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  final RecorderController recorderController = RecorderController();
+  String? recordedFilePath;
+  bool isRecording = false;
+  Timer? timer;
+  int recordedDuration = 0;
+
+  String get formattedDuration {
+    final minutes = (recordedDuration / 60000).floor();
+    final seconds = ((recordedDuration % 60000) / 1000).floor();
+    final milliseconds = (recordedDuration % 1000) ~/ 100;
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}:${milliseconds.toString().padLeft(1, '0')}';
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    recorderController.checkPermission();
+  }
+
+  @override
+  void dispose() {
+    recorderController.dispose();
+    timer?.cancel();
+    super.dispose();
+  }
+
+  void _stop() async {
+    setState(() {
+      isRecording = false;
+      recordedDuration = 0;
+    });
+    timer?.cancel();
+    timer = null;
+
+    recordedFilePath = await recorderController.stop();
+  }
+
+  void _record() async {
+    setState(() {
+      isRecording = true;
+    });
+
+    timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+      setState(() {
+        recordedDuration += 100;
+      });
+    });
+    recorderController.record();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      endDrawer: Drawer(
+        child: Column(
+          children: [
+            SizedBox(height: 24),
+            Text('Remember Me', style: TextStyle(fontSize: 16)),
+            SizedBox(height: 17),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Log out'),
+              onTap: () {
+                // Handle item tap
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {
+                // Handle item tap
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.info),
+              title: Text('License'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LicensePage()),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+      appBar: AppBar(),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(width: double.maxFinite),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Center(
+                      child:
+                          isRecording
+                              ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    width: 10,
+                                    height: 10,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    formattedDuration,
+                                    style: TextStyle(fontSize: 50),
+                                  ),
+                                ],
+                              )
+                              : Text(
+                                "Press the record button to save\n your memories",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: AudioWaveforms(
+                        recorderController: recorderController,
+                        waveStyle: WaveStyle(
+                          extendWaveform: true,
+                          showMiddleLine: false,
+                          scaleFactor: 50,
+                          spacing: 5,
+                          waveThickness: 2,
+                        ),
+                        size: Size(200, 100),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 50),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.grey[200],
+                    padding: EdgeInsets.all(20),
+                  ),
+                  onPressed: () {
+                    // Handle play button press
+                  },
+                  icon: Icon(Icons.camera_alt),
+                  iconSize: 30,
+                ),
+                Center(
+                  child: IconButton(
+                    style: IconButton.styleFrom(
+                      backgroundColor: Colors.grey[200],
+                      padding: EdgeInsets.all(20),
+                    ),
+                    onPressed: () async {
+                      if (recorderController.isRecording) {
+                        _stop();
+                        return;
+                      }
+                      if (recorderController.hasPermission) {
+                        _record();
+                        return;
+                      }
+                    },
+                    icon: Icon(isRecording ? Icons.stop : Icons.mic),
+                    iconSize: 70,
+                  ),
+                ),
+                IconButton(
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.grey[200],
+                    padding: EdgeInsets.all(20),
+                  ),
+                  onPressed: () {
+                    // Handle play button press
+                  },
+                  icon: Icon(Icons.history),
+                  iconSize: 30,
+                ),
+              ],
+            ),
+            SizedBox(height: 80),
+          ],
+        ),
+      ),
+    );
   }
 }

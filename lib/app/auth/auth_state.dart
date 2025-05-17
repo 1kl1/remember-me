@@ -13,7 +13,7 @@ final authStateProvider = NotifierProvider<_AuthStateNotifier, AuthState>(
 class _AuthStateNotifier extends Notifier<AuthState> {
   @override
   AuthState build() {
-    return AuthState(isLoggedIn: false);
+    return AuthState(isLoggedIn: true);
   }
 
   void setTokens(Token token) {

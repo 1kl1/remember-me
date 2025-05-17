@@ -30,9 +30,10 @@ void main() async {
       runApp(
         UncontrolledProviderScope(
           container: serviceProviderContainer,
-          child: CupertinoApp.router(
+          child: MaterialApp.router(
             title: 'Remember Me',
             routerConfig: router,
+            theme: ThemeData(),
             debugShowCheckedModeBanner: false,
             builder: (context, child) {
               return Overlay(
