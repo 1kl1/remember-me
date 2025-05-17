@@ -1,6 +1,6 @@
 name: remember_me
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -10,6 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_core: ^3.13.0
+  page_transition: ^2.0.9
+  dio: ^5.8.0+1
+  flutter_secure_storage: ^9.2.4
 
 dev_dependencies:
   flutter_test:
@@ -18,3 +21,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/family_dinner.png
