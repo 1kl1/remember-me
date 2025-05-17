@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -45,7 +45,7 @@ class RouterService {
   void init() {
     final refreshListenable = AuthStateListenable(container);
     router = GoRouter(
-      initialLocation: Routes.home,
+      initialLocation: Routes.login,
       redirect: (context, state) {
         final authState = container.read(authStateProvider);
 
@@ -56,15 +56,15 @@ class RouterService {
       },
       routes: [
         GoRoute(
-          path: Routes.home,
+          path: Routes.login,
           builder: (context, state) {
-            return HomePage();
+            return LoginPage();
           },
         ),
         GoRoute(
-          path: Routes.login,
+          path: Routes.home,
           builder: (context, state) {
-            return const LoginPage();
+            return HomeScreen();
           },
         ),
       ],
