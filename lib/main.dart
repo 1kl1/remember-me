@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,11 +30,11 @@ void main() async {
       runApp(
         UncontrolledProviderScope(
           container: serviceProviderContainer,
-          child: ShadcnApp.router(
-            theme: ThemeData(
-              colorScheme: ColorSchemes.lightViolet(),
-              radius: 0.5,
-            ),
+          child: MaterialApp.router(
+            // theme: ThemeData(
+            //   colorScheme: ColorSchemes.lightViolet(),
+            //   radius: 0.5,
+            // ),
             title: 'Remember Me',
             routerConfig: router,
             debugShowCheckedModeBanner: false,

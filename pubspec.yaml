@@ -26,7 +26,6 @@ dependencies:
   json_annotation: ^4.9.0
   image_picker: ^1.1.2
   shadcn_flutter: ^0.0.36
-  
 
 dev_dependencies:
   flutter_test:
@@ -40,3 +39,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/family_dinner.png
+    - .env

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:remember_me/app/auth/auth_state.dart';
 import 'package:remember_me/app/extension/build_context_x.dart';
 import 'package:remember_me/app/screens/home/home_page.dart';
+import 'package:remember_me/app/screens/home_screen.dart';
 import 'package:remember_me/app/screens/login/login_page.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 
@@ -77,18 +78,18 @@ class RouterService {
     router = GoRouter(
       initialLocation: Routes.home,
       redirect: (context, state) {
-        final authState = container.read(authStateProvider);
+        // final authState = container.read(authStateProvider);
 
-        if (authState.isLoggedIn) {
-          return null;
-        }
-        return Routes.login;
+        // if (authState.isLoggedIn) {
+        return null;
+        // }
+        // return Routes.login;
       },
       routes: [
         GoRoute(
           path: Routes.home,
           builder: (context, state) {
-            return const HomePage();
+            return HomeScreen();
           },
         ),
         GoRoute(
