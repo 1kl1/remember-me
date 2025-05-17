@@ -12,7 +12,8 @@ part of 'user.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 User _$UserFromJson(Map<String, dynamic> json) {
   return _User.fromJson(json);
@@ -40,12 +41,13 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call(
-      {int id,
-      String email,
-      String firebase_uid,
-      String display_name,
-      String created_at});
+  $Res call({
+    int id,
+    String email,
+    String firebase_uid,
+    String display_name,
+    String created_at,
+  });
 }
 
 /// @nodoc
@@ -69,44 +71,54 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? display_name = null,
     Object? created_at = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      firebase_uid: null == firebase_uid
-          ? _value.firebase_uid
-          : firebase_uid // ignore: cast_nullable_to_non_nullable
-              as String,
-      display_name: null == display_name
-          ? _value.display_name
-          : display_name // ignore: cast_nullable_to_non_nullable
-              as String,
-      created_at: null == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as int,
+            email:
+                null == email
+                    ? _value.email
+                    : email // ignore: cast_nullable_to_non_nullable
+                        as String,
+            firebase_uid:
+                null == firebase_uid
+                    ? _value.firebase_uid
+                    : firebase_uid // ignore: cast_nullable_to_non_nullable
+                        as String,
+            display_name:
+                null == display_name
+                    ? _value.display_name
+                    : display_name // ignore: cast_nullable_to_non_nullable
+                        as String,
+            created_at:
+                null == created_at
+                    ? _value.created_at
+                    : created_at // ignore: cast_nullable_to_non_nullable
+                        as String,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$$UserImplCopyWith(
-          _$UserImpl value, $Res Function(_$UserImpl) then) =
-      __$$UserImplCopyWithImpl<$Res>;
+    _$UserImpl value,
+    $Res Function(_$UserImpl) then,
+  ) = __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      String email,
-      String firebase_uid,
-      String display_name,
-      String created_at});
+  $Res call({
+    int id,
+    String email,
+    String firebase_uid,
+    String display_name,
+    String created_at,
+  });
 }
 
 /// @nodoc
@@ -114,7 +126,7 @@ class __$$UserImplCopyWithImpl<$Res>
     extends _$UserCopyWithImpl<$Res, _$UserImpl>
     implements _$$UserImplCopyWith<$Res> {
   __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
-      : super(_value, _then);
+    : super(_value, _then);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -127,40 +139,48 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? display_name = null,
     Object? created_at = null,
   }) {
-    return _then(_$UserImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      firebase_uid: null == firebase_uid
-          ? _value.firebase_uid
-          : firebase_uid // ignore: cast_nullable_to_non_nullable
-              as String,
-      display_name: null == display_name
-          ? _value.display_name
-          : display_name // ignore: cast_nullable_to_non_nullable
-              as String,
-      created_at: null == created_at
-          ? _value.created_at
-          : created_at // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    return _then(
+      _$UserImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        email:
+            null == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
+                    as String,
+        firebase_uid:
+            null == firebase_uid
+                ? _value.firebase_uid
+                : firebase_uid // ignore: cast_nullable_to_non_nullable
+                    as String,
+        display_name:
+            null == display_name
+                ? _value.display_name
+                : display_name // ignore: cast_nullable_to_non_nullable
+                    as String,
+        created_at:
+            null == created_at
+                ? _value.created_at
+                : created_at // ignore: cast_nullable_to_non_nullable
+                    as String,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$UserImpl implements _User {
-  _$UserImpl(
-      {required this.id,
-      required this.email,
-      required this.firebase_uid,
-      required this.display_name,
-      required this.created_at});
+  _$UserImpl({
+    required this.id,
+    required this.email,
+    required this.firebase_uid,
+    required this.display_name,
+    required this.created_at,
+  });
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -199,7 +219,13 @@ class _$UserImpl implements _User {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, email, firebase_uid, display_name, created_at);
+    runtimeType,
+    id,
+    email,
+    firebase_uid,
+    display_name,
+    created_at,
+  );
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -211,19 +237,18 @@ class _$UserImpl implements _User {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UserImplToJson(
-      this,
-    );
+    return _$$UserImplToJson(this);
   }
 }
 
 abstract class _User implements User {
-  factory _User(
-      {required final int id,
-      required final String email,
-      required final String firebase_uid,
-      required final String display_name,
-      required final String created_at}) = _$UserImpl;
+  factory _User({
+    required final int id,
+    required final String email,
+    required final String firebase_uid,
+    required final String display_name,
+    required final String created_at,
+  }) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 

@@ -12,7 +12,8 @@ part of 'auth_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 AuthState _$AuthStateFromJson(Map<String, dynamic> json) {
   return _AuthState.fromJson(json);
@@ -61,20 +62,26 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
     Object? accessToken = freezed,
     Object? refreshToken = freezed,
   }) {
-    return _then(_value.copyWith(
-      isLoggedIn: null == isLoggedIn
-          ? _value.isLoggedIn
-          : isLoggedIn // ignore: cast_nullable_to_non_nullable
-              as bool,
-      accessToken: freezed == accessToken
-          ? _value.accessToken
-          : accessToken // ignore: cast_nullable_to_non_nullable
-              as String?,
-      refreshToken: freezed == refreshToken
-          ? _value.refreshToken
-          : refreshToken // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            isLoggedIn:
+                null == isLoggedIn
+                    ? _value.isLoggedIn
+                    : isLoggedIn // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            accessToken:
+                freezed == accessToken
+                    ? _value.accessToken
+                    : accessToken // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            refreshToken:
+                freezed == refreshToken
+                    ? _value.refreshToken
+                    : refreshToken // ignore: cast_nullable_to_non_nullable
+                        as String?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -82,8 +89,9 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
 abstract class _$$AuthStateImplCopyWith<$Res>
     implements $AuthStateCopyWith<$Res> {
   factory _$$AuthStateImplCopyWith(
-          _$AuthStateImpl value, $Res Function(_$AuthStateImpl) then) =
-      __$$AuthStateImplCopyWithImpl<$Res>;
+    _$AuthStateImpl value,
+    $Res Function(_$AuthStateImpl) then,
+  ) = __$$AuthStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool isLoggedIn, String? accessToken, String? refreshToken});
@@ -94,8 +102,9 @@ class __$$AuthStateImplCopyWithImpl<$Res>
     extends _$AuthStateCopyWithImpl<$Res, _$AuthStateImpl>
     implements _$$AuthStateImplCopyWith<$Res> {
   __$$AuthStateImplCopyWithImpl(
-      _$AuthStateImpl _value, $Res Function(_$AuthStateImpl) _then)
-      : super(_value, _then);
+    _$AuthStateImpl _value,
+    $Res Function(_$AuthStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.
@@ -106,28 +115,36 @@ class __$$AuthStateImplCopyWithImpl<$Res>
     Object? accessToken = freezed,
     Object? refreshToken = freezed,
   }) {
-    return _then(_$AuthStateImpl(
-      isLoggedIn: null == isLoggedIn
-          ? _value.isLoggedIn
-          : isLoggedIn // ignore: cast_nullable_to_non_nullable
-              as bool,
-      accessToken: freezed == accessToken
-          ? _value.accessToken
-          : accessToken // ignore: cast_nullable_to_non_nullable
-              as String?,
-      refreshToken: freezed == refreshToken
-          ? _value.refreshToken
-          : refreshToken // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$AuthStateImpl(
+        isLoggedIn:
+            null == isLoggedIn
+                ? _value.isLoggedIn
+                : isLoggedIn // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        accessToken:
+            freezed == accessToken
+                ? _value.accessToken
+                : accessToken // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        refreshToken:
+            freezed == refreshToken
+                ? _value.refreshToken
+                : refreshToken // ignore: cast_nullable_to_non_nullable
+                    as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$AuthStateImpl implements _AuthState {
-  _$AuthStateImpl(
-      {required this.isLoggedIn, this.accessToken, this.refreshToken});
+  _$AuthStateImpl({
+    required this.isLoggedIn,
+    this.accessToken,
+    this.refreshToken,
+  });
 
   factory _$AuthStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$AuthStateImplFromJson(json);
@@ -172,17 +189,16 @@ class _$AuthStateImpl implements _AuthState {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AuthStateImplToJson(
-      this,
-    );
+    return _$$AuthStateImplToJson(this);
   }
 }
 
 abstract class _AuthState implements AuthState {
-  factory _AuthState(
-      {required final bool isLoggedIn,
-      final String? accessToken,
-      final String? refreshToken}) = _$AuthStateImpl;
+  factory _AuthState({
+    required final bool isLoggedIn,
+    final String? accessToken,
+    final String? refreshToken,
+  }) = _$AuthStateImpl;
 
   factory _AuthState.fromJson(Map<String, dynamic> json) =
       _$AuthStateImpl.fromJson;

@@ -12,7 +12,8 @@ part of 'token.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Token _$TokenFromJson(Map<String, dynamic> json) {
   return _Token.fromJson(json);
@@ -54,28 +55,31 @@ class _$TokenCopyWithImpl<$Res, $Val extends Token>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? access_token = null,
-    Object? refresh_token = null,
-  }) {
-    return _then(_value.copyWith(
-      access_token: null == access_token
-          ? _value.access_token
-          : access_token // ignore: cast_nullable_to_non_nullable
-              as String,
-      refresh_token: null == refresh_token
-          ? _value.refresh_token
-          : refresh_token // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  $Res call({Object? access_token = null, Object? refresh_token = null}) {
+    return _then(
+      _value.copyWith(
+            access_token:
+                null == access_token
+                    ? _value.access_token
+                    : access_token // ignore: cast_nullable_to_non_nullable
+                        as String,
+            refresh_token:
+                null == refresh_token
+                    ? _value.refresh_token
+                    : refresh_token // ignore: cast_nullable_to_non_nullable
+                        as String,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$TokenImplCopyWith<$Res> implements $TokenCopyWith<$Res> {
   factory _$$TokenImplCopyWith(
-          _$TokenImpl value, $Res Function(_$TokenImpl) then) =
-      __$$TokenImplCopyWithImpl<$Res>;
+    _$TokenImpl value,
+    $Res Function(_$TokenImpl) then,
+  ) = __$$TokenImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String access_token, String refresh_token});
@@ -86,27 +90,29 @@ class __$$TokenImplCopyWithImpl<$Res>
     extends _$TokenCopyWithImpl<$Res, _$TokenImpl>
     implements _$$TokenImplCopyWith<$Res> {
   __$$TokenImplCopyWithImpl(
-      _$TokenImpl _value, $Res Function(_$TokenImpl) _then)
-      : super(_value, _then);
+    _$TokenImpl _value,
+    $Res Function(_$TokenImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Token
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? access_token = null,
-    Object? refresh_token = null,
-  }) {
-    return _then(_$TokenImpl(
-      access_token: null == access_token
-          ? _value.access_token
-          : access_token // ignore: cast_nullable_to_non_nullable
-              as String,
-      refresh_token: null == refresh_token
-          ? _value.refresh_token
-          : refresh_token // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? access_token = null, Object? refresh_token = null}) {
+    return _then(
+      _$TokenImpl(
+        access_token:
+            null == access_token
+                ? _value.access_token
+                : access_token // ignore: cast_nullable_to_non_nullable
+                    as String,
+        refresh_token:
+            null == refresh_token
+                ? _value.refresh_token
+                : refresh_token // ignore: cast_nullable_to_non_nullable
+                    as String,
+      ),
+    );
   }
 }
 
@@ -153,16 +159,15 @@ class _$TokenImpl implements _Token {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TokenImplToJson(
-      this,
-    );
+    return _$$TokenImplToJson(this);
   }
 }
 
 abstract class _Token implements Token {
-  factory _Token(
-      {required final String access_token,
-      required final String refresh_token}) = _$TokenImpl;
+  factory _Token({
+    required final String access_token,
+    required final String refresh_token,
+  }) = _$TokenImpl;
 
   factory _Token.fromJson(Map<String, dynamic> json) = _$TokenImpl.fromJson;
 

@@ -7,12 +7,12 @@ part of 'user.dart';
 // **************************************************************************
 
 _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
-      id: (json['id'] as num).toInt(),
-      email: json['email'] as String,
-      firebase_uid: json['firebase_uid'] as String,
-      display_name: json['display_name'] as String,
-      created_at: json['created_at'] as String,
-    );
+  id: (json['id'] as num).toInt(),
+  email: json['email'] as String,
+  firebase_uid: json['firebase_uid'] as String,
+  display_name: json['display_name'] as String,
+  created_at: json['created_at'] as String,
+);
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
     <String, dynamic>{
