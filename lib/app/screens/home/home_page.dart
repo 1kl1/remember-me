@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:developer';
-
-import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:remember_me/app/extension/build_context_x.dart';
+
 import 'package:remember_me/app/screens/home/logic/home_provider.dart';
 import 'package:remember_me/app/screens/home/logic/home_state.dart';
 import 'package:remember_me/app/screens/home/widgets/home_answer_page.dart';
@@ -20,17 +22,12 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  final RecorderController recorderController = RecorderController();
   String? recordedFilePath;
   bool isRecording = false;
   Timer? timer;
   int recordedDuration = 0;
-  // late Record _recorder;
-  // late StreamSubscription<RecordState> _recordSub;
-  // late StreamSubscription<List<int>> _audioStreamSubscription;
-  // late StreamController<List<int>> _audioStreamController;
-  // late SpeechToText _speechToText;
-  // String _transcription = '';
+  stt.SpeechToText? speech;
+  final TextEditingController _controller = TextEditingController();
 
   String get formattedDuration {
     final minutes = (recordedDuration / 60000).floor();
@@ -42,14 +39,11 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
-    recorderController.checkPermission();
   }
 
   @override
   void dispose() {
-    recorderController.dispose();
     timer?.cancel();
-
     super.dispose();
   }
 
@@ -61,11 +55,11 @@ class _HomePageState extends ConsumerState<HomePage> {
     timer?.cancel();
     timer = null;
 
-    recordedFilePath = await recorderController.stop();
+    log("Recorded file path: $recordedFilePath");
     if (recordedFilePath == null) {
       return;
     }
-    ref.read(homeProvider.notifier).saveRecording(recordedFilePath!);
+    speech?.stop();
   }
 
   void _record() async {
@@ -78,7 +72,24 @@ class _HomePageState extends ConsumerState<HomePage> {
         recordedDuration += 100;
       });
     });
-    recorderController.record();
+    speech = stt.SpeechToText();
+    bool available = await speech!.initialize(
+      onStatus: (s) {
+        log(s);
+      },
+      onError: (e) {
+        log(e.toString());
+      },
+    );
+    if (available) {
+      speech!.listen(
+        onResult: (result) {
+          _controller.text = result.recognizedWords;
+        },
+      );
+    } else {
+      print("The user has denied the use of speech recognition.");
+    }
   }
 
   Widget _buildRecordingPage() {
@@ -122,22 +133,48 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
               ),
               Expanded(
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: AudioWaveforms(
-                    recorderController: recorderController,
-                    waveStyle: WaveStyle(
-                      extendWaveform: true,
-                      showMiddleLine: false,
-                      scaleFactor: 50,
-                      spacing: 5,
-                      waveThickness: 2,
-                    ),
-                    size: Size(200, 150),
+                child: Center(
+                  child: SizedBox(
+                    width: context.width * 0.8,
+                    child:
+                        isRecording
+                            ? Text(_controller.text)
+                            : Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(controller: _controller),
+                                ),
+                                IconButton(
+                                  onPressed: () async {
+                                    final result = await ref
+                                        .read(homeProvider.notifier)
+                                        .saveRecording(_controller.text);
+
+                                    if (result) {
+                                      _controller.clear();
+
+                                      ElegantNotification.success(
+                                        title: Text("Saved Memory"),
+                                        description: Text(
+                                          "Memory saved successfully!",
+                                        ),
+                                      ).show(context);
+                                    } else {
+                                      ElegantNotification.error(
+                                        title: Text("Error"),
+                                        description: Text(
+                                          "Failed to save memory.",
+                                        ),
+                                      ).show(context);
+                                    }
+                                  },
+                                  icon: Icon(Icons.send),
+                                ),
+                              ],
+                            ),
                   ),
                 ),
               ),
-              Expanded(child: SingleChildScrollView(child: Text(""))),
             ],
           ),
         ),
@@ -164,13 +201,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                   padding: EdgeInsets.all(20),
                 ),
                 onPressed: () async {
-                  if (recorderController.isRecording) {
+                  if (isRecording) {
                     _stop(ref);
-                    return;
-                  }
-                  if (recorderController.hasPermission) {
+                  } else {
                     _record();
-                    return;
                   }
                 },
                 icon: Icon(isRecording ? Icons.stop : Icons.mic),
@@ -273,10 +307,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 );
               },
               child:
-                  ref.watch(
-                            homeProvider.select((state) => state.selectedTab),
-                          ) ==
-                          HomeTabs.record
+                  ref.watch(homeProvider).selectedTab == HomeTabs.record
                       ? _buildRecordingPage()
                       : _buildAnsweringPage(),
             ),

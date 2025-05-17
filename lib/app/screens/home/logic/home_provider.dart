@@ -1,10 +1,15 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:remember_me/app/api/api_service.dart';
 import 'package:remember_me/app/screens/home/logic/home_state.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:remember_me/app/service/gcs_storage_service.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 final homeProvider = NotifierProvider<HomeNotifier, HomeState>(
   HomeNotifier.new,
@@ -22,10 +27,10 @@ class HomeNotifier extends Notifier<HomeState> {
     state = state.copyWith(selectedTab: tab);
   }
 
-  Future<bool> saveRecording(String filePath) async {
-    state = state.copyWith(recordedFilePath: filePath, isUploading: true);
+  Future<bool> saveRecording(String text) async {
+    state = state.copyWith(isUploading: true);
 
-    final result = await ApiService.I.uploadTextMemory(filePath);
+    final result = await ApiService.I.uploadTextMemory(text);
     return result.fold(
       onSuccess: (data) {
         state = state.copyWith(isUploading: false);

@@ -8,7 +8,6 @@ enum HomeTabs { record, answer }
 @freezed
 class HomeState with _$HomeState {
   factory HomeState({
-    String? recordedFilePath,
     @Default(false) bool isUploading,
     @Default(HomeTabs.record) HomeTabs selectedTab,
   }) = _HomeState;

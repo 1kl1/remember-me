@@ -29,7 +29,7 @@ dependencies:
   animated_text_kit: ^4.2.3
   persistent_bottom_nav_bar_v2: ^6.0.0
   speech_to_text: ^7.0.0
-  
+  elegant_notification: ^2.5.1
 
 dev_dependencies:
   flutter_test:
@@ -44,3 +44,4 @@ flutter:
   assets:
     - assets/images/family_dinner.png
     - .env
+    - assets/

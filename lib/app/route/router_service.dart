@@ -45,7 +45,7 @@ class RouterService {
   void init() {
     final refreshListenable = AuthStateListenable(container);
     router = GoRouter(
-      initialLocation: Routes.login,
+      initialLocation: Routes.home,
       redirect: (context, state) {
         final authState = container.read(authStateProvider);
 
@@ -64,7 +64,7 @@ class RouterService {
         GoRoute(
           path: Routes.home,
           builder: (context, state) {
-            return HomeScreen();
+            return HomePage();
           },
         ),
       ],

@@ -11,13 +11,13 @@ class HomeBottomBar extends ConsumerWidget {
     final selectedTab = ref.watch(homeProvider).selectedTab;
     return SafeArea(
       child: Container(
-        height: 60,
+        height: 65,
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(color: Colors.grey.shade300, width: 1),
           ),
         ),
-        padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10, bottom: 10),
         child: Row(
           children: [
             Expanded(
