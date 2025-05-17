@@ -1,12 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:remember_me/app/auth/auth_state.dart';
-import 'package:remember_me/app/extension/build_context_x.dart';
-import 'package:remember_me/app/screens/home/home_page.dart';
 import 'package:remember_me/app/screens/home_screen.dart';
 import 'package:remember_me/app/screens/login/login_page.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 extension GoRouterX on GoRouter {
   BuildContext? get context => configuration.navigatorKey.currentContext;
@@ -43,47 +41,17 @@ class RouterService {
 
   String? queryParameter(String key) => router.currentUri.queryParameters[key];
 
-  void showNotification({
-    required String title,
-    required String message,
-    bool isError = false,
-  }) {
-    final context = router.context;
-    if (context == null) return;
-
-    showToast(
-      context: context,
-      builder:
-          (c, o) => SurfaceCard(
-            borderColor:
-                isError ? context.colorScheme.destructive : Colors.green,
-            child: Basic(
-              title: Text(title),
-              subtitle: Text(message),
-              trailingAlignment: Alignment.center,
-              trailing: GhostButton(
-                size: ButtonSize.small,
-                onPressed: () {
-                  o.close();
-                },
-                child: const Text('닫기'),
-              ),
-            ),
-          ),
-    );
-  }
-
   void init() {
     final refreshListenable = AuthStateListenable(container);
     router = GoRouter(
       initialLocation: Routes.home,
       redirect: (context, state) {
-        // final authState = container.read(authStateProvider);
+        final authState = container.read(authStateProvider);
 
-        // if (authState.isLoggedIn) {
-        return null;
-        // }
-        // return Routes.login;
+        if (authState.isLoggedIn) {
+          return null;
+        }
+        return Routes.login;
       },
       routes: [
         GoRoute(

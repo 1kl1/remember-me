@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -14,7 +15,6 @@ import 'package:remember_me/app/route/router_service.dart';
 import 'package:remember_me/app/service/gcs_storage_service.dart';
 import 'package:remember_me/app/service/secure_storage_service.dart';
 import 'package:remember_me/firebase_options.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 part 'service.dart';
 
@@ -30,11 +30,7 @@ void main() async {
       runApp(
         UncontrolledProviderScope(
           container: serviceProviderContainer,
-          child: MaterialApp.router(
-            // theme: ThemeData(
-            //   colorScheme: ColorSchemes.lightViolet(),
-            //   radius: 0.5,
-            // ),
+          child: CupertinoApp.router(
             title: 'Remember Me',
             routerConfig: router,
             debugShowCheckedModeBanner: false,

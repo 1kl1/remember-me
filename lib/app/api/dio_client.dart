@@ -65,13 +65,6 @@ class MyDio {
         return Result.success(response.data as T);
       }
     } on DioException catch (e) {
-      if (kDebugMode && bool.parse(dotenv.env["API_DEBUG"] ?? "true")) {
-        RouterService.I.showNotification(
-          title: path,
-          message: "Data: $data\nQuery: $queryParameters",
-          isError: true,
-        );
-      }
       return Result.failure(ApiError.fromDioError(e));
     } catch (e) {
       if (kDebugMode) rethrow;

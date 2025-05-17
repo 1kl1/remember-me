@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:remember_me/app/api/token.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 part 'auth_state.freezed.dart';
 part 'auth_state.g.dart';
