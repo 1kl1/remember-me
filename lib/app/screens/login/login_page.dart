@@ -140,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Container(
             padding: const EdgeInsets.all(28.0),
             decoration: BoxDecoration(
-              color: Colors.grey,
+              color: Colors.grey[300],
               borderRadius: BorderRadius.circular(30.0),
               boxShadow: [
                 BoxShadow(
@@ -162,14 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       fontSize: 48.0,
                       fontWeight: FontWeight.bold,
-                      color: titleTextColor,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 5.0,
-                          color: Colors.black.withOpacity(0.35),
-                          offset: const Offset(2, 3),
-                        ),
-                      ],
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(height: 35.0),

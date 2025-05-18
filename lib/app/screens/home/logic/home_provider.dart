@@ -23,6 +23,18 @@ class HomeNotifier extends Notifier<HomeState> {
 
   final ImagePicker _picker = ImagePicker();
 
+  Future<String> getAnswer(String text) async {
+    final result = await ApiService.I.getAnswer(text);
+    return result.fold(
+      onSuccess: (data) {
+        return data;
+      },
+      onFailure: (e) {
+        return "";
+      },
+    );
+  }
+
   void setTab(HomeTabs tab) {
     state = state.copyWith(selectedTab: tab);
   }

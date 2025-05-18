@@ -21,7 +21,8 @@ class _HistoryPageState extends ConsumerState<HistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final histories = ref.watch(historyProvider).histories;
+    final histories =
+        [...ref.watch(historyProvider).histories].reversed.toList();
     return Scaffold(
       appBar: AppBar(title: Text("History")),
       body: SafeArea(

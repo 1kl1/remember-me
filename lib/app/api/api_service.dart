@@ -22,6 +22,14 @@ class ApiService {
     _dio = MyDio(dio: Dio(), rawDio: Dio());
   }
 
+  Future<Result<String>> getAnswer(String text) async {
+    return _dio.post(
+      "/api/v1/memories/recall",
+      data: {"query": text},
+      fromJson: (json) => json["answer"],
+    );
+  }
+
   Future<Result<Token>> signIn(String email, String password) => _dio.post(
     "/api/v1/auth/signin",
     data: {"email": email, "password": password},

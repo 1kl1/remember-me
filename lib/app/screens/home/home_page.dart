@@ -207,6 +207,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     final result = await ref
                                         .read(homeProvider.notifier)
                                         .saveRecording(_controller.text);
+
                                     Navigator.pop(context);
                                     if (result) {
                                       _controller.clear();
@@ -314,13 +315,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 AuthService.I.logout();
               },
             ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-              onTap: () {
-                // Handle item tap
-              },
-            ),
+
             ListTile(
               leading: Icon(Icons.info),
               title: Text('License'),
