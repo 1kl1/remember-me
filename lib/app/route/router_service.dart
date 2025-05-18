@@ -64,7 +64,7 @@ class RouterService {
         GoRoute(
           path: Routes.home,
           builder: (context, state) {
-            return HomeScreen();
+            return HomePage();
           },
         ),
       ],
