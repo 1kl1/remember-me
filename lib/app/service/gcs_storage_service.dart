@@ -22,7 +22,7 @@ class GcsStorageService {
     try {
       final fileName =
           '${path.basename(imageFile.path)}_${DateTime.now().millisecondsSinceEpoch}';
-
+      log(imageFile.path);
       final destination = 'images/$fileName';
       final ref = _storage.ref().child(destination);
       final uploadTask = ref.putFile(imageFile);

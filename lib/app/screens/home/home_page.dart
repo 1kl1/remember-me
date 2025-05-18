@@ -11,6 +11,7 @@ import 'package:remember_me/app/screens/home/logic/home_provider.dart';
 import 'package:remember_me/app/screens/home/logic/home_state.dart';
 import 'package:remember_me/app/screens/home/widgets/home_answer_page.dart';
 import 'package:remember_me/app/screens/home/widgets/home_bottom_bar.dart';
+import 'package:remember_me/app/screens/home/widgets/home_bottom_sheet.dart';
 import 'package:remember_me/constants.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
@@ -132,6 +133,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),
                 ),
               ),
+
               Expanded(
                 child: Center(
                   child: SizedBox(
@@ -183,16 +185,23 @@ class _HomePageState extends ConsumerState<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            IconButton(
-              style: IconButton.styleFrom(
-                backgroundColor: Colors.grey[200],
-                padding: EdgeInsets.all(20),
-              ),
-              onPressed: () {
-                ref.read(homeProvider.notifier).pickImage();
+            Builder(
+              builder: (context) {
+                return IconButton(
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.grey[200],
+                    padding: EdgeInsets.all(20),
+                  ),
+                  onPressed: () {
+                    showBottomSheet(
+                      context: context,
+                      builder: (c) => HomeBottomSheet(),
+                    );
+                  },
+                  icon: Icon(Icons.camera_alt),
+                  iconSize: 30,
+                );
               },
-              icon: Icon(Icons.camera_alt),
-              iconSize: 30,
             ),
             Center(
               child: IconButton(

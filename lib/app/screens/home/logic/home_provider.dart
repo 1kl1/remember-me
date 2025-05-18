@@ -43,24 +43,33 @@ class HomeNotifier extends Notifier<HomeState> {
     );
   }
 
-  Future<void> pickImage() async {
+  Future<bool?> pickImage({required bool isCamera}) async {
     state = state.copyWith(isUploading: true);
-    final image = await _picker.pickImage(source: ImageSource.gallery);
+    final image = await _picker.pickImage(
+      source: isCamera ? ImageSource.camera : ImageSource.gallery,
+    );
     if (image != null) {
       var result = await GcsStorageService.I.uploadImageToGCS(File(image.path));
       if (!result.isSuccess) {
         state = state.copyWith(isUploading: true);
-        return;
+        return false;
       }
       var serverResult = await ApiService.I.uploadImageMemory(
         File(image.path),
         result.data,
       );
-      if (!serverResult.isSuccess) {
-        state = state.copyWith(isUploading: true);
-        return;
-      }
-      state = state.copyWith(isUploading: true);
+
+      return serverResult.fold(
+        onSuccess: (data) {
+          state = state.copyWith(isUploading: false);
+          return true;
+        },
+        onFailure: (e) {
+          state = state.copyWith(isUploading: false);
+          return false;
+        },
+      );
     }
+    return null;
   }
 }
