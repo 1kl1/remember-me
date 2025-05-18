@@ -302,31 +302,35 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: Drawer(
-        child: Column(
-          children: [
-            SizedBox(height: 24),
-            Text('Remember Me', style: TextStyle(fontSize: 16)),
-            SizedBox(height: 17),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Log out'),
-              onTap: () {
-                AuthService.I.logout();
-              },
-            ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              SizedBox(height: 24),
+              Text('Remember Me', style: TextStyle(fontSize: 16)),
+              SizedBox(height: 17),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.logout),
+                title: Text('Log out'),
+                onTap: () {
+                  AuthService.I.logout();
+                },
+              ),
 
-            ListTile(
-              leading: Icon(Icons.info),
-              title: Text('License'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LicensePage()),
-                );
-              },
-            ),
-          ],
+              ListTile(
+                leading: Icon(Icons.info),
+                title: Text('License'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LicensePage(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
       appBar: AppBar(),
