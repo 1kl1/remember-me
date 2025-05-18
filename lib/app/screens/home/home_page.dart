@@ -8,8 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:remember_me/app/auth/auth_service.dart';
 import 'package:remember_me/app/extension/build_context_x.dart';
+import 'package:remember_me/app/provider/user/user_provider.dart';
 import 'package:remember_me/app/route/router_service.dart';
-
 import 'package:remember_me/app/screens/home/logic/home_provider.dart';
 import 'package:remember_me/app/screens/home/logic/home_state.dart';
 import 'package:remember_me/app/screens/home/widgets/home_answer_page.dart';
@@ -43,6 +43,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
+    ref.read(userProvider.notifier).getUser();
   }
 
   @override
@@ -97,9 +98,28 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Widget _buildRecordingPage() {
+    final userState = ref.watch(userProvider);
+    final displayName = userState.display_name;
     return Column(
       key: const Key('recording_page'),
       children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 16.0,
+            left: 16.0,
+            right: 16.0,
+            bottom: 8.0,
+          ),
+          child: Text(
+            "Hello, $displayName!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey[700],
+            ),
+          ),
+        ),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -127,10 +147,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ],
                           )
                           : Text(
-                            "Press the record button to save\n your memories",
+                            "Record your memories",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 20,
                               color: Colors.grey[600],
                             ),
                           ),
