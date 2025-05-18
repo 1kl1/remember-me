@@ -5,8 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:remember_me/app/auth/auth_service.dart';
 import 'package:remember_me/app/extension/build_context_x.dart';
+import 'package:remember_me/app/route/router_service.dart';
 
 import 'package:remember_me/app/screens/home/logic/home_provider.dart';
 import 'package:remember_me/app/screens/home/logic/home_state.dart';
@@ -260,7 +262,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 padding: EdgeInsets.all(20),
               ),
               onPressed: () {
-                // Handle play button press
+                context.push(Routes.history);
               },
               icon: Icon(Icons.history),
               iconSize: 30,

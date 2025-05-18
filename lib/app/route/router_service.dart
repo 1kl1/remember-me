@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:remember_me/app/auth/auth_state.dart';
+import 'package:remember_me/app/screens/history/history_page.dart';
 import 'package:remember_me/app/screens/home/home_page.dart';
 import 'package:remember_me/app/screens/home_screen.dart';
 import 'package:remember_me/app/screens/login/login_page.dart';
@@ -30,6 +31,7 @@ abstract class Routes {
   static const String error = '/error';
   static const String login = '/login';
   static const String register = '/register';
+  static const String history = '/history';
 }
 
 class RouterService {
@@ -65,6 +67,12 @@ class RouterService {
           path: Routes.home,
           builder: (context, state) {
             return HomePage();
+          },
+        ),
+        GoRoute(
+          path: Routes.history,
+          builder: (context, state) {
+            return HistoryPage();
           },
         ),
       ],
