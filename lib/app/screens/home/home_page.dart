@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:remember_me/app/auth/auth_service.dart';
 import 'package:remember_me/app/extension/build_context_x.dart';
 
 import 'package:remember_me/app/screens/home/logic/home_provider.dart';
@@ -144,14 +145,47 @@ class _HomePageState extends ConsumerState<HomePage> {
                             : Row(
                               children: [
                                 Expanded(
-                                  child: TextField(controller: _controller),
+                                  child: TextField(
+                                    controller: _controller,
+                                    maxLines: 3,
+                                  ),
                                 ),
                                 IconButton(
                                   onPressed: () async {
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder:
+                                          (context) => AlertDialog(
+                                            title: Text("Saving Memory"),
+                                            content: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    vertical: 20.0,
+                                                  ),
+                                              child: SizedBox(
+                                                width: 50,
+                                                height: 50,
+                                                child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ),
+                                              ),
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text("Cancel"),
+                                              ),
+                                            ],
+                                          ),
+                                    );
                                     final result = await ref
                                         .read(homeProvider.notifier)
                                         .saveRecording(_controller.text);
-
+                                    Navigator.pop(context);
                                     if (result) {
                                       _controller.clear();
 
@@ -255,7 +289,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               leading: Icon(Icons.logout),
               title: Text('Log out'),
               onTap: () {
-                // Handle item tap
+                AuthService.I.logout();
               },
             ),
             ListTile(

@@ -55,7 +55,7 @@ class ApiService {
   Future<Result<bool>> uploadImageMemory(File image, String fileUrl) async {
     final formData = FormData.fromMap({
       "image": await MultipartFile.fromFile(image.path),
-      "file_url": fileUrl,
+      "image_url": fileUrl,
     });
     return _dio.post("/api/v1/memories/image", data: formData);
   }

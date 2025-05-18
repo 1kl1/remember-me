@@ -57,9 +57,34 @@ class HomeBottomSheet extends ConsumerWidget {
               leading: Icon(Icons.camera_alt),
               trailing: Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () async {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder:
+                      (context) => AlertDialog(
+                        title: Text("Saving Memory"),
+                        content: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: Center(child: CircularProgressIndicator()),
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("Cancel"),
+                          ),
+                        ],
+                      ),
+                );
                 final result = await ref
                     .read(homeProvider.notifier)
                     .pickImage(isCamera: true);
+                Navigator.pop(context);
                 _handleResult(context, result);
                 Navigator.pop(context);
               },
@@ -69,9 +94,34 @@ class HomeBottomSheet extends ConsumerWidget {
               leading: Icon(Icons.photo),
               trailing: Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () async {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder:
+                      (context) => AlertDialog(
+                        title: Text("Saving Memory"),
+                        content: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: Center(child: CircularProgressIndicator()),
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("Cancel"),
+                          ),
+                        ],
+                      ),
+                );
                 final result = await ref
                     .read(homeProvider.notifier)
                     .pickImage(isCamera: false);
+                Navigator.pop(context);
                 _handleResult(context, result);
                 Navigator.pop(context);
               },
