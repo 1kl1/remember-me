@@ -21,7 +21,6 @@ HomeState _$HomeStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HomeState {
-  String? get recordedFilePath => throw _privateConstructorUsedError;
   bool get isUploading => throw _privateConstructorUsedError;
   HomeTabs get selectedTab => throw _privateConstructorUsedError;
 
@@ -40,7 +39,7 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({String? recordedFilePath, bool isUploading, HomeTabs selectedTab});
+  $Res call({bool isUploading, HomeTabs selectedTab});
 }
 
 /// @nodoc
@@ -57,18 +56,9 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? recordedFilePath = freezed,
-    Object? isUploading = null,
-    Object? selectedTab = null,
-  }) {
+  $Res call({Object? isUploading = null, Object? selectedTab = null}) {
     return _then(
       _value.copyWith(
-            recordedFilePath:
-                freezed == recordedFilePath
-                    ? _value.recordedFilePath
-                    : recordedFilePath // ignore: cast_nullable_to_non_nullable
-                        as String?,
             isUploading:
                 null == isUploading
                     ? _value.isUploading
@@ -94,7 +84,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   ) = __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? recordedFilePath, bool isUploading, HomeTabs selectedTab});
+  $Res call({bool isUploading, HomeTabs selectedTab});
 }
 
 /// @nodoc
@@ -110,18 +100,9 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? recordedFilePath = freezed,
-    Object? isUploading = null,
-    Object? selectedTab = null,
-  }) {
+  $Res call({Object? isUploading = null, Object? selectedTab = null}) {
     return _then(
       _$HomeStateImpl(
-        recordedFilePath:
-            freezed == recordedFilePath
-                ? _value.recordedFilePath
-                : recordedFilePath // ignore: cast_nullable_to_non_nullable
-                    as String?,
         isUploading:
             null == isUploading
                 ? _value.isUploading
@@ -141,7 +122,6 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$HomeStateImpl implements _HomeState {
   _$HomeStateImpl({
-    this.recordedFilePath,
     this.isUploading = false,
     this.selectedTab = HomeTabs.record,
   });
@@ -149,8 +129,6 @@ class _$HomeStateImpl implements _HomeState {
   factory _$HomeStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeStateImplFromJson(json);
 
-  @override
-  final String? recordedFilePath;
   @override
   @JsonKey()
   final bool isUploading;
@@ -160,7 +138,7 @@ class _$HomeStateImpl implements _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(recordedFilePath: $recordedFilePath, isUploading: $isUploading, selectedTab: $selectedTab)';
+    return 'HomeState(isUploading: $isUploading, selectedTab: $selectedTab)';
   }
 
   @override
@@ -168,8 +146,6 @@ class _$HomeStateImpl implements _HomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
-            (identical(other.recordedFilePath, recordedFilePath) ||
-                other.recordedFilePath == recordedFilePath) &&
             (identical(other.isUploading, isUploading) ||
                 other.isUploading == isUploading) &&
             (identical(other.selectedTab, selectedTab) ||
@@ -178,8 +154,7 @@ class _$HomeStateImpl implements _HomeState {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, recordedFilePath, isUploading, selectedTab);
+  int get hashCode => Object.hash(runtimeType, isUploading, selectedTab);
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -196,17 +171,12 @@ class _$HomeStateImpl implements _HomeState {
 }
 
 abstract class _HomeState implements HomeState {
-  factory _HomeState({
-    final String? recordedFilePath,
-    final bool isUploading,
-    final HomeTabs selectedTab,
-  }) = _$HomeStateImpl;
+  factory _HomeState({final bool isUploading, final HomeTabs selectedTab}) =
+      _$HomeStateImpl;
 
   factory _HomeState.fromJson(Map<String, dynamic> json) =
       _$HomeStateImpl.fromJson;
 
-  @override
-  String? get recordedFilePath;
   @override
   bool get isUploading;
   @override
