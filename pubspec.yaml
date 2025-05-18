@@ -30,6 +30,7 @@ dependencies:
   persistent_bottom_nav_bar_v2: ^6.0.0
   speech_to_text: ^7.0.0
   elegant_notification: ^2.5.1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

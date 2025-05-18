@@ -7,6 +7,7 @@ import 'package:remember_me/app/api/token.dart';
 import 'package:remember_me/app/auth/auth_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remember_me/app/provider/user/user.dart';
+import 'package:remember_me/app/screens/history/logic/history.dart';
 import 'package:uuid/uuid.dart';
 
 class ApiService {
@@ -58,5 +59,16 @@ class ApiService {
       "image_url": fileUrl,
     });
     return _dio.post("/api/v1/memories/image", data: formData);
+  }
+
+  Future<Result<List<History>>> getHistories() async {
+    return _dio.get(
+      "/api/v1/memories/me",
+      fromJson:
+          (json) =>
+              (json["memories"])
+                  .map<History>((e) => History.fromJson(e))
+                  .toList(),
+    );
   }
 }
